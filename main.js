@@ -19,9 +19,12 @@ const nextBtn = document.querySelector('#next-btn');
 
 // 2. データの準備（あやねさんのサイトから想定したスライド画像配列）
 const images = [
-  'assets/slide1.jpg',
-  'assets/slide2.jpg',
-  'assets/slide3.jpg'
+  'assets/p2hacks2025_slide01.webp',
+  'assets/p2hacks2025_slide02.webp',
+  'assets/p2hacks2025_slide03.webp',
+  'assets/p2hacks2025_slide04.webp',
+  'assets/p2hacks2025_slide05.webp',
+  'assets/p2hacks2025_slide06.webp'
 ];
 
 // 3. 「いま何枚目？」を管理する変数
