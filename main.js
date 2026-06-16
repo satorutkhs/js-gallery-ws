@@ -2,23 +2,21 @@
 // 【ステップ1】JSの超基本：要素を掴んで動かす
 // ==========================================
 
-// TODO: 1. タイトル要素 (class="title") を取得しましょう
-// const titleElement = 
+const titleElement = document.querySelector('.title');
 
-// TODO: 2. タイトルをクリックしたときに、文字の色を未来大カラー（#AF1F24）に変えてみましょう
-// titleElement.addEventListener...
+titleElement.addEventListener('click', function() {
+  titleElement.style.color = '#AF1F24';
+});
 
 
 // ==========================================
 // 【ステップ2】メイン機能①：スライドショーの実装
 // ==========================================
 
-// TODO: 1. 必要なHTML要素を取得しましょう (slide-img, prev-btn, next-btn)
-// const slideImg = 
-// const prevBtn = 
-// const nextBtn = 
+const slideImg = document.querySelector('#slide-img');
+const prevBtn = document.querySelector('#prev-btn');
+const nextBtn = document.querySelector('#next-btn');
 
-// 2. スライド画像のファイルパス配列
 const images = [
   'assets/p2hacks2025_slide01.webp',
   'assets/p2hacks2025_slide02.webp',
@@ -28,31 +26,45 @@ const images = [
   'assets/p2hacks2025_slide06.webp'
 ];
 
-// 3. 現在の画像インデックスを管理する変数
-// let currentIndex = 0;
+let currentIndex = 0;
 
-// TODO: 4. 「次へ」ボタンクリック時の画像切り替え（ループ処理を含む）
-// nextBtn.addEventListener...
+nextBtn.addEventListener('click', function() {
+  currentIndex++;
+  if (currentIndex >= images.length) {
+    currentIndex = 0;
+  }
+  slideImg.src = images[currentIndex];
+});
 
-// TODO: 5. 「前へ」ボタンクリック時の画像切り替え（ループ処理を含む）
-// prevBtn.addEventListener...
+prevBtn.addEventListener('click', function() {
+  currentIndex--;
+  if (currentIndex < 0) {
+    currentIndex = images.length - 1;
+  }
+  slideImg.src = images[currentIndex];
+});
 
 
 // ==========================================
 // 【ステップ3】メイン機能②：画像のズーム（モーダル）の実装
 // ==========================================
 
-// TODO: 1. 必要なHTML要素を取得しましょう (zoom-trigger, modal, modal-img, modal-close)
-// const zoomTrigger = 
-// const modal = 
-// const modalImg = 
-// const modalClose = 
+const zoomTrigger = document.querySelector('#zoom-trigger');
+const modal = document.querySelector('#modal');
+const modalImg = document.querySelector('#modal-img');
+const modalClose = document.querySelector('#modal-close');
 
-// TODO: 2. 写真クリック時にモーダルを開き、画像のsrcをコピーして表示しましょう
-// zoomTrigger.addEventListener...
+zoomTrigger.addEventListener('click', function() {
+  modalImg.src = zoomTrigger.src;
+  modal.classList.add('is-open');
+});
 
-// TODO: 3. 閉じるボタン（×）クリック時にモーダルを閉じましょう
-// modalClose.addEventListener...
+modalClose.addEventListener('click', function() {
+  modal.classList.remove('is-open');
+});
 
-// TODO: 4. 【応用】黒い背景部分をクリックしたときもモーダルを閉じるようにしましょう
-// modal.addEventListener...
+modal.addEventListener('click', function(event) {
+  if (event.target === modal) {
+    modal.classList.remove('is-open');
+  }
+});
