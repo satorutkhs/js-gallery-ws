@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>p2hacks実績ページ（2025版）再現WS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <span class="logo">公立はこだて未来大学（再現）</span>
+  </header>
+
+  <main class="container">
+    <h2 class="title">Post-PBL部門 〈学年不問の部門〉</h2>
+    <div class="award">最優秀賞</div>
+    <p class="team-name">The Avengers !! チーム 「OctoDeck」</p>
+
+    <div class="content-grid">
+      
+      <div class="photo-area">
+        <img src="assets/photo.jpg" id="zoom-trigger" alt="受賞写真" class="clickable-img">
+        <p class="caption">キラキラカードを集めてキラキラエンジニアとつながるアプリ "OctoDeck"</p>
+      </div>
+
+      <div class="slide-area">
+        <div class="slide-container">
+          <img src="assets/slide1.jpg" id="slide-img" alt="スライド画像">
+        </div>
+        <div class="slide-controls">
+          <button id="prev-btn">◀ 前へ</button>
+          <button id="next-btn">次へ ▶</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="modal" class="modal">
+    <span id="modal-close" class="modal-close">&times;</span>
+    <img id="modal-img" class="modal-content" src="" alt="拡大画像">
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
