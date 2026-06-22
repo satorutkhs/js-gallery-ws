@@ -179,7 +179,7 @@ const titleElement = document.querySelector('.title');
 
 // 2. タイトルクリック時のイベントを登録
 titleElement.addEventListener('click', function() {
-  titleElement.style.color = '#AF1F24'; // CSSの color プロパティを書き換える
+  titleElement.style.color = '#990000'; // CSSの color プロパティを書き換える
   console.log('タイトルがクリックされました！'); // デバッグログ
 });
 ```
