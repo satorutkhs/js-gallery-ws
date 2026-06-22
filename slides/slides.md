@@ -121,7 +121,7 @@ style: |
 ## 🚀 HTML/CSSの次にやる！p2hacks実績ページの再現
 
 公立はこだて未来大学 p2hacks実績ページ（2025年版）
-主催: 運営チーム
+主催: Osuga-Union
 
 ---
 
