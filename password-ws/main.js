@@ -7,60 +7,14 @@
 const passwordInput = document.querySelector('#password-input'); // パスワード入力欄
 const startBtn      = document.querySelector('#start-btn');      // スタートボタン
 const timerDisplay  = document.querySelector('#timer');          // タイマー表示エリア
-const celebration   = document.querySelector('#celebration');    // クリア演出の枠
+const celebration   = document.querySelector('#celebration');    // クリア演出 of 枠
 const finalTimeEl   = document.querySelector('#final-time');     // クリア画面に出す最終タイム
 const retryBtn      = document.querySelector('#retry-btn');      // もう一度ボタン
 const confettiBox   = document.querySelector('#confetti-container'); // 紙吹雪の入れ物
 
 
 // ==========================================
-// 【ステップ2】ストップウォッチの実装
-// ==========================================
-// setInterval(関数, ミリ秒) = 指定したミリ秒ごとに関数を繰り返す
-// clearInterval(ID)         = setIntervalを止める（IDが必要）
-
-let startTime    = null;  // 計測開始時刻（Date.now()で取得するミリ秒）
-let timerInterval = null; // setIntervalの返り値（止めるために保存しておく）
-let isRunning    = false; // 「今タイマーが動いているか？」のフラグ（旗）
-
-
-// ── スタートボタンを押したとき ──
-startBtn.addEventListener('click', function() {
-  startTime = Date.now(); // 現在時刻を「開始時刻」として記録
-  isRunning = true;
-
-  startBtn.disabled = false; // ボタンをグレーアウト（二度押し防止）
-  startBtn.disabled = true;
-  passwordInput.disabled = false; // 入力欄を有効化
-  passwordInput.focus();          // カーソルを入力欄に移動
-  timerDisplay.classList.add('running'); // 光るクラスを追加
-
-  // 10ミリ秒ごとにタイマーの数字を更新する
-  timerInterval = setInterval(function() {
-    const elapsed = Date.now() - startTime; // 経過時間（ミリ秒）
-    timerDisplay.textContent = formatTime(elapsed); // 表示を更新
-  }, 10);
-});
-
-
-// ── 時間をMM:SS.cc形式の文字列に変換する関数 ──
-// 例: 75430 ミリ秒 → "01:15.43"
-function formatTime(ms) {
-  const minutes      = Math.floor(ms / 60000);            // 分 (60000ms = 1分)
-  const seconds      = Math.floor((ms % 60000) / 1000);   // 秒 (残りをさらに1000で割る)
-  const centiseconds = Math.floor((ms % 1000) / 10);      // 1/100秒
-
-  // padStart(2, '0') = 1桁のとき先頭に'0'を付けて2桁にする（例: 5 → "05"）
-  return (
-    String(minutes).padStart(2, '0') + ':' +
-    String(seconds).padStart(2, '0') + '.' +
-    String(centiseconds).padStart(2, '0')
-  );
-}
-
-
-// ==========================================
-// 【ステップ3】パスワード条件の定義と判定
+// 【ステップ2】パスワード条件の定義と判定
 // ==========================================
 // 各条件を「オブジェクト」として配列にまとめて管理する。
 // check: (val) => ... は「val（入力値）を受け取ってtrueかfalseを返す関数」
@@ -112,10 +66,8 @@ const conditions = [
   {
     id: 'cond-zenkaku',
     // 【ポイント！】全角「Ａ」（U+FF21）と半角「l」（U+006C）は見た目が似ているが別の文字！
-    //
     // 全角の「Ａ」= 幅が広い大文字A（日本語フォントで使われる）→ キーボードの「A」を全角入力
     // 半角の「l」 = 普通の小文字エル（英語のL）
-    //
     // /Ａl/ という正規表現で「Ａ」のあとに「l」が連続する箇所を探す
     check: function(val) {
       return /Ａl/.test(val);
@@ -165,6 +117,51 @@ passwordInput.addEventListener('input', function() {
     celebrate();
   }
 });
+
+
+// ==========================================
+// 【ステップ3】ストップウォッチの実装
+// ==========================================
+// setInterval(関数, ミリ秒) = 指定したミリ秒ごとに関数を繰り返す
+// clearInterval(ID)         = setIntervalを止める（IDが必要）
+
+let startTime    = null;  // 計測開始時刻（Date.now()で取得するミリ秒）
+let timerInterval = null; // setIntervalの返り値（止めるために保存しておく）
+let isRunning    = false; // 「今タイマーが動いているか？」のフラグ（旗）
+
+
+// ── スタートボタンを押したとき ──
+startBtn.addEventListener('click', function() {
+  startTime = Date.now(); // 現在時刻を「開始時刻」として記録
+  isRunning = true;
+
+  startBtn.disabled = true;       // ボタンをグレーアウト（二度押し防止）
+  passwordInput.disabled = false; // 入力欄を有効化
+  passwordInput.focus();          // カーソルを入力欄に移動
+  timerDisplay.classList.add('running'); // 光るクラスを追加
+
+  // 10ミリ秒ごとにタイマーの数字を更新する
+  timerInterval = setInterval(function() {
+    const elapsed = Date.now() - startTime; // 経過時間（ミリ秒）
+    timerDisplay.textContent = formatTime(elapsed); // 表示を更新
+  }, 10);
+});
+
+
+// ── 時間をMM:SS.cc形式の文字列に変換する関数 ──
+// 例: 75430 ミリ秒 → "01:15.43"
+function formatTime(ms) {
+  const minutes      = Math.floor(ms / 60000);            // 分 (60000ms = 1分)
+  const seconds      = Math.floor((ms % 60000) / 1000);   // 秒 (残りをさらに1000で割る)
+  const centiseconds = Math.floor((ms % 1000) / 10);      // 1/100秒
+
+  // padStart(2, '0') = 1桁のとき先頭に'0'を付けて2桁にする（例: 5 → "05"）
+  return (
+    String(minutes).padStart(2, '0') + ':' +
+    String(seconds).padStart(2, '0') + '.' +
+    String(centiseconds).padStart(2, '0')
+  );
+}
 
 
 // ==========================================
