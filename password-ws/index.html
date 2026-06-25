@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パスワードチャレンジ WS | JS Workshop</title>
+  <meta name="description" content="ストップウォッチで測りながら、7つの条件を全部クリアするパスワードを作ろう！JavaScriptの実践ワークショップ">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="../index.html" class="back-link">← p2hacks実績ページへ</a>
+    <span class="logo">⏱ パスワードチャレンジ WS</span>
+  </header>
+
+  <main class="container">
+
+    <h1 class="page-title">パスワードチャレンジ 🔐</h1>
+    <p class="subtitle">
+      ストップウォッチで測りながら、<strong>7つの条件</strong>をすべて満たすパスワードを作ろう！<br>
+      スタートを押してから入力開始！
+    </p>
+
+    <!-- ストップウォッチ -->
+    <div class="timer-section">
+      <div id="timer" class="timer-display">00:00.00</div>
+      <button id="start-btn" class="start-btn">▶ スタート！</button>
+    </div>
+
+    <!-- パスワード入力欄 -->
+    <div class="input-section">
+      <label for="password-input" class="input-label">パスワードを入力：</label>
+      <input
+        type="text"
+        id="password-input"
+        class="password-input"
+        placeholder="← まずスタートを押してね！"
+        disabled
+        autocomplete="off"
+        spellcheck="false"
+      >
+    </div>
+
+    <!-- 条件リスト -->
+    <div class="conditions-section">
+      <h2 class="conditions-title">条件リスト</h2>
+      <ul class="conditions-list">
+
+        <li id="cond-length" class="condition-item">
+          <span class="cond-icon">✗</span>
+          <div class="cond-body">
+            <span class="cond-text">8文字以上</span>
+            <span class="cond-hint">例: password123</span>
+          </div>
+        </li>
+
+        <li id="cond-uppercase" class="condition-item">
+          <span class="cond-icon">✗</span>
+          <div class="cond-body">
+            <span class="cond-text">大文字（A〜Z）を含む</span>
+            <span class="cond-hint">例: Password → ✓</span>
+          </div>
+        </li>
+
+        <li id="cond-number" class="condition-item">
+          <span class="cond-icon">✗</span>
+          <div class="cond-body">
+            <span class="cond-text">数字（0〜9）を含む</span>
+            <span class="cond-hint">例: Pass1word → ✓</span>
+          </div>
+        </li>
+
+        <li id="cond-symbol" class="condition-item">
+          <span class="cond-icon">✗</span>
+          <div class="cond-body">
+            <span class="cond-text">記号（! @ # $ % など）を含む</span>
+            <span class="cond-hint">例: Pass!word → ✓</span>
+          </div>
+        </li>
+
+        <li id="cond-yen" class="condition-item">
+          <span class="cond-icon">✗</span>
+          <div class="cond-body">
+            <span class="cond-text">¥（円記号）を含む</span>
+            <span class="cond-hint">Apple Accountの実際の要件！</span>
+          </div>
+        </li>
+
+        <li id="cond-zenkaku" class="condition-item">
+          <span class="cond-icon">✗</span>
+          <div class="cond-body">
+            <span class="cond-text">全角「Ａ」と半角「l」が連続して登場する</span>
+            <span class="cond-hint">例: Ａl ← この2文字の並びを含む（全角Aのあとに半角l）</span>
+          </div>
+        </li>
+
+        <li id="cond-sushi" class="condition-item">
+          <span class="cond-icon">✗</span>
+          <div class="cond-body">
+            <span class="cond-text">🍣（寿司の絵文字）を含む</span>
+            <span class="cond-hint">そのままコピペしてもOK！</span>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+  </main>
+
+  <!-- ========================================
+    クリア演出：パチンコ風オーバーレイ
+    最初は非表示（JSで .is-active を追加すると表示）
+  ======================================== -->
+  <div id="celebration" class="celebration">
+
+    <!-- 紙吹雪を入れるコンテナ（JSで動的に追加） -->
+    <div id="confetti-container" class="confetti-container"></div>
+
+    <!-- メインコンテンツ -->
+    <div class="celebration-content">
+      <div class="pachinko-slot">🎰</div>
+      <h2 class="clear-title">全条件クリア！！</h2>
+      <div class="clear-stars">⭐⭐⭐⭐⭐</div>
+      <p class="clear-time-label">タイム</p>
+      <p id="final-time" class="final-time">00:00.00</p>
+      <button id="retry-btn" class="retry-btn">🔄 もう一度挑戦！</button>
+    </div>
+
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
