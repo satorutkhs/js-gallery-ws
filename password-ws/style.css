@@ -1,0 +1,449 @@
+/* ===========================
+   リセット・基本スタイル
+=========================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Helvetica Neue', Arial, 'Hiragino Sans', sans-serif;
+  background: #0f0f1a;
+  color: #eee;
+  min-height: 100vh;
+}
+
+/* ===========================
+   ヘッダー
+=========================== */
+.header {
+  background: #1a1a2e;
+  border-bottom: 2px solid #b31b20;
+  padding: 14px 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.back-link {
+  color: #888;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #e84040;
+}
+
+.logo {
+  font-weight: bold;
+  color: #e84040;
+  font-size: 1.05rem;
+}
+
+/* ===========================
+   メインコンテナ
+=========================== */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #999;
+  text-align: center;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  font-size: 0.95rem;
+}
+
+.subtitle strong {
+  color: #e84040;
+}
+
+/* ===========================
+   ストップウォッチ
+=========================== */
+.timer-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.timer-display {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #00cc66;
+  background: #0a0a15;
+  border: 2px solid #00cc6633;
+  border-radius: 14px;
+  padding: 20px 36px;
+  display: inline-block;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+  min-width: 300px;
+  text-shadow: 0 0 20px #00cc6644;
+  transition: text-shadow 0.4s, border-color 0.4s, color 0.4s;
+}
+
+/* タイマー動作中のスタイル */
+.timer-display.running {
+  color: #00ff88;
+  text-shadow: 0 0 25px #00ff88, 0 0 50px #00ff8833;
+  border-color: #00ff8855;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #e84040, #b31b20);
+  color: #fff;
+  border: none;
+  padding: 14px 44px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(232, 64, 64, 0.45);
+  transition: transform 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+
+.start-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 64, 64, 0.55);
+}
+
+.start-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.start-btn:disabled {
+  background: #333;
+  color: #666;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ===========================
+   パスワード入力欄
+=========================== */
+.input-section {
+  margin-bottom: 32px;
+}
+
+.input-label {
+  display: block;
+  font-size: 0.88rem;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.password-input {
+  width: 100%;
+  padding: 15px 18px;
+  font-size: 1.3rem;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  background: #1a1a2e;
+  border: 2px solid #2a2a3e;
+  border-radius: 10px;
+  color: #fff;
+  outline: none;
+  letter-spacing: 2px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.password-input:focus {
+  border-color: #e84040;
+  box-shadow: 0 0 0 3px rgba(232, 64, 64, 0.15);
+}
+
+.password-input:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ===========================
+   条件リスト
+=========================== */
+.conditions-section {
+  background: #14142a;
+  border: 1px solid #2a2a3e;
+  border-radius: 14px;
+  padding: 25px;
+}
+
+.conditions-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ccc;
+  margin-bottom: 18px;
+  border-left: 4px solid #e84040;
+  padding-left: 12px;
+}
+
+.conditions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 各条件アイテム（デフォルト：未クリア = 赤） */
+.condition-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  background: #0f0f1a;
+  border: 1px solid #2a2a3e;
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.2s ease;
+}
+
+.cond-icon {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #e84040;
+  min-width: 22px;
+  text-align: center;
+  line-height: 1.5;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.cond-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cond-text {
+  font-size: 0.95rem;
+  color: #bbb;
+  font-weight: 600;
+  line-height: 1.4;
+  transition: color 0.3s;
+}
+
+.cond-hint {
+  font-size: 0.78rem;
+  color: #666;
+  font-family: 'JetBrains Mono', monospace;
+  transition: color 0.3s;
+}
+
+/* クリア済みスタイル → 緑！ */
+.condition-item.clear {
+  background: #001a0c;
+  border-color: #00cc66;
+  transform: scale(1.01);
+}
+
+.condition-item.clear .cond-icon {
+  color: #00ff88;
+  transform: scale(1.2);
+}
+
+.condition-item.clear .cond-text {
+  color: #00ff88;
+}
+
+.condition-item.clear .cond-hint {
+  color: #00cc66;
+}
+
+/* ===========================
+   パチンコ演出オーバーレイ
+=========================== */
+.celebration {
+  display: none; /* JSで .is-active を追加すると表示 */
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  /* 虹色に点滅する背景 */
+  animation: bgFlash 0.25s infinite;
+}
+
+.celebration.is-active {
+  display: flex;
+}
+
+/* 背景が虹色に点滅するアニメーション */
+@keyframes bgFlash {
+  0%   { background: rgba(255, 0, 0, 0.88); }
+  14%  { background: rgba(255, 140, 0, 0.88); }
+  28%  { background: rgba(255, 230, 0, 0.88); }
+  42%  { background: rgba(0, 210, 80, 0.88); }
+  57%  { background: rgba(0, 100, 255, 0.88); }
+  71%  { background: rgba(140, 0, 255, 0.88); }
+  85%  { background: rgba(255, 0, 140, 0.88); }
+  100% { background: rgba(255, 0, 0, 0.88); }
+}
+
+/* メインコンテンツボックス */
+.celebration-content {
+  position: relative;
+  z-index: 10;
+  background: #0a0a15;
+  border-radius: 22px;
+  padding: 50px 65px;
+  text-align: center;
+  /* ポップイン + 虹色ボーダーグロー */
+  animation: borderGlow 0.4s linear infinite, popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ポップイン（スケールが0→1に拡大する演出） */
+@keyframes popIn {
+  from {
+    transform: scale(0) rotate(-8deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* ボックス全体のグローが虹色に変化 */
+@keyframes borderGlow {
+  0%   { box-shadow: 0 0 0 4px #ff0000, 0 0 40px #ff000066; }
+  16%  { box-shadow: 0 0 0 4px #ff9900, 0 0 40px #ff990066; }
+  33%  { box-shadow: 0 0 0 4px #ffff00, 0 0 40px #ffff0066; }
+  50%  { box-shadow: 0 0 0 4px #00ff66, 0 0 40px #00ff6666; }
+  66%  { box-shadow: 0 0 0 4px #0066ff, 0 0 40px #0066ff66; }
+  83%  { box-shadow: 0 0 0 4px #cc00ff, 0 0 40px #cc00ff66; }
+  100% { box-shadow: 0 0 0 4px #ff0000, 0 0 40px #ff000066; }
+}
+
+/* 回転するスロット絵文字 */
+.pachinko-slot {
+  font-size: 4.5rem;
+  display: inline-block;
+  margin-bottom: 8px;
+  animation: slotSpin 0.6s linear infinite;
+}
+
+@keyframes slotSpin {
+  0%   { transform: scale(1)   rotate(0deg); }
+  25%  { transform: scale(1.3) rotate(90deg); }
+  50%  { transform: scale(1)   rotate(180deg); }
+  75%  { transform: scale(1.3) rotate(270deg); }
+  100% { transform: scale(1)   rotate(360deg); }
+}
+
+/* 「全条件クリア！！」テキスト（虹色） */
+.clear-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+  animation: rainbowText 0.4s linear infinite;
+}
+
+@keyframes rainbowText {
+  0%   { color: #ff0000; }
+  16%  { color: #ff9900; }
+  33%  { color: #ffff00; }
+  50%  { color: #00ff66; }
+  66%  { color: #0066ff; }
+  83%  { color: #cc00ff; }
+  100% { color: #ff0000; }
+}
+
+/* 星 */
+.clear-stars {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  animation: starBounce 0.5s ease-in-out infinite;
+}
+
+@keyframes starBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-8px) scale(1.1); }
+}
+
+/* タイム表示 */
+.clear-time-label {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.final-time {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 3.8rem;
+  font-weight: 900;
+  color: #ffff00;
+  text-shadow: 0 0 20px #ffff00, 0 0 50px #ff990088;
+  margin-bottom: 30px;
+  animation: timePulse 0.5s ease-in-out infinite;
+}
+
+@keyframes timePulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.07); }
+}
+
+/* もう一度ボタン */
+.retry-btn {
+  background: linear-gradient(135deg, #ffdd00, #ff9900);
+  color: #000;
+  border: none;
+  padding: 14px 36px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 20px rgba(255, 200, 0, 0.5);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.retry-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 30px rgba(255, 200, 0, 0.65);
+}
+
+/* ===========================
+   紙吹雪（コンフェッティ）
+=========================== */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9; /* メインコンテンツより後ろ */
+}
+
+/* JSで動的に生成される各紙吹雪のスタイル */
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  border-radius: 2px;
+  animation: confettiFall linear both;
+  opacity: 0.9;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scaleX(1);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(900deg) scaleX(-1);
+    opacity: 0;
+  }
+}

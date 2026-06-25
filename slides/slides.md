@@ -121,7 +121,7 @@ style: |
 ## 🚀 HTML/CSSの次にやる！p2hacks実績ページの再現
 
 公立はこだて未来大学 p2hacks実績ページ（2025年版）
-主催: Osuga-Union
+主催: 運営チーム
 
 ---
 
@@ -179,7 +179,7 @@ const titleElement = document.querySelector('.title');
 
 // 2. タイトルクリック時のイベントを登録
 titleElement.addEventListener('click', function() {
-  titleElement.style.color = '#990000'; // CSSの color プロパティを書き換える
+  titleElement.style.color = '#AF1F24'; // CSSの color プロパティを書き換える
   console.log('タイトルがクリックされました！'); // デバッグログ
 });
 ```

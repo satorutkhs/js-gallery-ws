@@ -137,3 +137,56 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
+
+/* ===========================
+   次のWSへの導線バナー
+=========================== */
+.next-ws-banner {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-top: 3px solid #b31b20;
+  padding: 30px 20px;
+  margin-top: 60px;
+  text-align: center;
+}
+.next-ws-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.next-ws-label {
+  display: inline-block;
+  background: #b31b20;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+.next-ws-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  margin: 6px 0;
+}
+.next-ws-desc {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 18px;
+}
+.next-ws-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #e84040, #b31b20);
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 4px 20px rgba(184, 27, 32, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.next-ws-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(184, 27, 32, 0.65);
+}
