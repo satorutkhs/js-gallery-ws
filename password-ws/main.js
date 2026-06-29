@@ -5,12 +5,13 @@
 // CSS と同じセレクタ記法（# = ID、. = クラス）を使う
 
 const passwordInput = document.querySelector('#password-input'); // パスワード入力欄
-const startBtn      = document.querySelector('#start-btn');      // スタートボタン
-const timerDisplay  = document.querySelector('#timer');          // タイマー表示エリア
-const celebration   = document.querySelector('#celebration');    // クリア演出の枠
-const finalTimeEl   = document.querySelector('#final-time');     // クリア画面に出す最終タイム
-const retryBtn      = document.querySelector('#retry-btn');      // もう一度ボタン
-const confettiBox   = document.querySelector('#confetti-container'); // 紙吹雪の入れ物
+const startBtn = document.querySelector('#start-btn');      // スタートボタン
+const timerDisplay = document.querySelector('#timer');          // タイマー表示エリア
+
+// ──【ワーク】以下の3つのHTML要素も document.querySelector を使って取得してみよう！ ──
+const celebration = null; // TODO: '#celebration' (クリア画面の枠) を取得する
+const finalTimeEl = null; // TODO: '#final-time' (クリア画面に出す最終タイム) を取得する
+const retryBtn = null; // TODO: '#retry-btn' (もう一度ボタン) を取得する
 
 
 // ==========================================
@@ -29,7 +30,7 @@ const conditions = [
   {
     id: 'cond-length',
     // .length で文字数を取得し、8文字以上かチェック
-    check: function(val) {
+    check: function (val) {
       return val.length >= 8;
     }
   },
@@ -37,46 +38,51 @@ const conditions = [
     id: 'cond-uppercase',
     // /[A-Z]/ = 「A〜Zのどれか」にマッチする正規表現
     // .test(val) = val にマッチする文字があるか（true/false）
-    check: function(val) {
+    check: function (val) {
       return /[A-Z]/.test(val);
     }
   },
+  // ──【ワーク】ここから下の条件判定を自分で書いてみよう！ ──
+  // （ヒント：スライドの正規表現や includes の説明を参考にしよう）
   {
     id: 'cond-number',
-    // /[0-9]/ = 数字1文字にマッチ
-    check: function(val) {
-      return /[0-9]/.test(val);
+    // 3. 数字（0〜9）を含む
+    check: function (val) {
+      // TODO: ここに数字が含まれているか判定するコードを書く
+      // return ...;
     }
   },
   {
     id: 'cond-symbol',
-    // /[!@#$%^&*()\-_+=<>?]/ = よく使う記号のどれかにマッチ
-    check: function(val) {
-      return /[!@#$%^&*()\-_+=<>?]/.test(val);
+    // 4. 記号（! @ # $ % など）を含む
+    check: function (val) {
+      // TODO: ここに記号が含まれているか判定するコードを書く
+      // return ...;
     }
   },
   {
     id: 'cond-yen',
-    // ¥ = 円記号（U+00A5）
-    // includes() = 文字列の中に含まれているか確認する（true/false）
-    check: function(val) {
-      return val.includes('¥');
+    // 5. ¥（円記号）を含む
+    check: function (val) {
+      // TODO: ここに¥が含まれているか判定するコードを書く
+      // return ...;
     }
   },
+  // ──【ワーク】ここまで ──
   {
     id: 'cond-zenkaku',
     // 【ポイント！】全角「Ａ」（U+FF21）と半角「l」（U+006C）は見た目が似ているが別の文字！
     // 全角の「Ａ」= 幅が広い大文字A（日本語フォントで使われる）→ キーボードの「A」を全角入力
     // 半角の「l」 = 普通の小文字エル（英語のL）
     // /Ａl/ という正規表現で「Ａ」のあとに「l」が連続する箇所を探す
-    check: function(val) {
+    check: function (val) {
       return /Ａl/.test(val);
     }
   },
   {
     id: 'cond-sushi',
     // 🍣 = 寿司の絵文字（そのまま includes で判定できる！）
-    check: function(val) {
+    check: function (val) {
       return val.includes('🍣');
     }
   }
@@ -85,7 +91,7 @@ const conditions = [
 
 // ── パスワードが入力・変更されるたびに実行される ──
 // 'input' イベント = テキストが変わるたびに発火する（キーを押すたびに動く）
-passwordInput.addEventListener('input', function() {
+passwordInput.addEventListener('input', function () {
 
   // スタートしていない場合は何もしない
   if (!isRunning) return;
@@ -94,29 +100,28 @@ passwordInput.addEventListener('input', function() {
   let allClear = true;               // 全条件クリアフラグ（最初はtrueで始める）
 
   // conditions 配列をひとつずつ処理（forEach = 繰り返し）
-  conditions.forEach(function(condition) {
+  conditions.forEach(function (condition) {
     // IDを使って条件の<li>要素を取得
     const element = document.querySelector('#' + condition.id);
     // アイコン（✗ や ✓）が入っている<span>を取得
-    const iconEl  = element.querySelector('.cond-icon');
+    const iconEl = element.querySelector('.cond-icon');
 
-    // 【TODO 3】各条件をクリアしているかどうかを判定しよう！
-    // ヒント: condition.check(value) の結果が true かどうかを if 文でチェックします
-    if (/* ここに条件式を書く */) {
+    if (condition.check(value)) {
       // ── 条件クリア！ ──
-      // 【TODO 4】element の classList に 'clear' を追加し、iconEl のテキスト(textContent)を '✓' にしよう！
-
+      element.classList.add('clear');    // 緑にするクラスを追加
+      iconEl.textContent = '✓';         // ✗ → ✓ に文字を変える
     } else {
       // ── 未達成 ──
-      // 【TODO 5】element の classList から 'clear' を取り除き、iconEl のテキスト(textContent)を '✗' に戻そう！
-      // さらに、allClear フラグを false に設定しよう！
-
+      element.classList.remove('clear'); // クリアクラスを外して赤に戻す
+      iconEl.textContent = '✗';         // ✓ → ✗ に戻す
+      allClear = false;                  // 1つでも未達成ならフラグをfalseに
     }
   });
 
-  // 【TODO 6】もし allClear が true だったらクリア演出を開始しよう！
-  // ヒント: celebrate() という関数を呼び出します
-  
+  // 全条件クリアだったらクリア演出を開始！
+  if (allClear) {
+    celebrate();
+  }
 });
 
 
@@ -126,13 +131,13 @@ passwordInput.addEventListener('input', function() {
 // setInterval(関数, ミリ秒) = 指定したミリ秒ごとに関数を繰り返す
 // clearInterval(ID)         = setIntervalを止める（IDが必要）
 
-let startTime    = null;  // 計測開始時刻（Date.now()で取得するミリ秒）
+let startTime = null;  // 計測開始時刻（Date.now()で取得するミリ秒）
 let timerInterval = null; // setIntervalの返り値（止めるために保存しておく）
-let isRunning    = false; // 「今タイマーが動いているか？」のフラグ（旗）
+let isRunning = false; // 「今タイマーが動いているか？」のフラグ（旗）
 
 
 // ── スタートボタンを押したとき ──
-startBtn.addEventListener('click', function() {
+startBtn.addEventListener('click', function () {
   startTime = Date.now(); // 現在時刻を「開始時刻」として記録
   isRunning = true;
 
@@ -141,24 +146,20 @@ startBtn.addEventListener('click', function() {
   passwordInput.focus();          // カーソルを入力欄に移動
   timerDisplay.classList.add('running'); // 光るクラスを追加
 
-  // 10ミリ秒ごとにタイマーの数字を更新する
-  timerInterval = setInterval(function() {
-    // 【TODO 1】経過時間（ミリ秒）を計算しよう！
-    // ヒント: 現在時刻（Date.now()）から startTime を引くと計算できます
-    // const elapsed = ...;
-
-    // 【TODO 2】タイマー表示（timerDisplay）の文字（textContent）を更新しよう！
-    // ヒント: formatTime(elapsed) を使うと "00:00.00" 形式の文字列が得られます
-    
-  }, 10);
+  // ──【ワーク】10ミリ秒ごとにタイマーの数字を更新しよう！ ──
+  // TODO: setIntervalを使って、10ミリ秒経過するごとに elapsed を求め、タイマーの表示(timerDisplay.textContent)を formatTime(elapsed) で更新しよう
+  // timerInterval = setInterval(function() {
+  //   const elapsed = ...;
+  //   timerDisplay.textContent = ...;
+  // }, 10);
 });
 
 
 // ── 時間をMM:SS.cc形式の文字列に変換する関数 ──
 // 例: 75430 ミリ秒 → "01:15.43"
 function formatTime(ms) {
-  const minutes      = Math.floor(ms / 60000);            // 分 (60000ms = 1分)
-  const seconds      = Math.floor((ms % 60000) / 1000);   // 秒 (残りをさらに1000で割る)
+  const minutes = Math.floor(ms / 60000);            // 分 (60000ms = 1分)
+  const seconds = Math.floor((ms % 60000) / 1000);   // 秒 (残りをさらに1000で割る)
   const centiseconds = Math.floor((ms % 1000) / 10);      // 1/100秒
 
   // padStart(2, '0') = 1桁のとき先頭に'0'を付けて2桁にする（例: 5 → "05"）
@@ -171,68 +172,20 @@ function formatTime(ms) {
 
 
 // ==========================================
-// 【ステップ4】クリア演出（パチンコ風！🎰）
+// 【ステップ4】クリア演出（成功表示）
 // ==========================================
 
 function celebrate() {
-  // 【TODO 7】タイマーを止めよう！
-  // ヒント: clearInterval(timerInterval) を使います
-  
-
-  isRunning = false;
-
-  // クリア時のタイムを演出画面にセット
-  finalTimeEl.textContent = timerDisplay.textContent;
-
-  // 【TODO 8】演出オーバーレイ（celebration）を表示しよう！
-  // ヒント: classList に 'is-active' を追加します
-  
-
-  // 紙吹雪を生成して画面に降らせる！
-  createConfetti();
-}
-
-
-// ── 紙吹雪（コンフェッティ）を生成する関数 ──
-function createConfetti() {
-  const colors = [
-    '#ff0000', '#ff9900', '#ffff00',
-    '#00ff66', '#0066ff', '#cc00ff', '#ff0099'
-  ];
-
-  // 150個の紙吹雪を作る
-  for (let i = 0; i < 150; i++) {
-
-    // 【TODO 9】新しい <div> 要素を作成しよう！
-    // ヒント: document.createElement('div') を使います
-    const piece = /* ここに書く */;
-    piece.classList.add('confetti-piece');
-
-    // ランダムな値を計算
-    const randomLeft     = Math.random() * 100;             // 0〜100% の横位置
-    const randomColor    = colors[Math.floor(Math.random() * colors.length)]; // ランダム色
-    const randomWidth    = Math.random() * 10 + 6;          // 幅: 6〜16px
-    const randomHeight   = Math.random() * 8  + 8;          // 高さ: 8〜16px
-    const randomDuration = Math.random() * 2  + 1.8;        // 落下時間: 1.8〜3.8秒
-    const randomDelay    = Math.random() * 2;               // 開始遅延: 0〜2秒
-
-    // 各スタイルを設定
-    piece.style.left            = randomLeft + '%';
-    piece.style.backgroundColor = randomColor;
-    piece.style.width           = randomWidth + 'px';
-    piece.style.height          = randomHeight + 'px';
-    piece.style.animationDuration = randomDuration + 's';
-    piece.style.animationDelay    = randomDelay + 's';
-
-    // 【TODO 10】作成した piece を confettiBox の中に追加しよう！
-    // ヒント: appendChild() を使います
-    
-  }
+  // ──【ワーク】タイマーを止め、最終タイムをセットして、クリア画面を表示しよう！ ──
+  // TODO: 1. タイマー（timerInterval）を止める (clearInterval を使う)
+  // isRunning = false;
+  // TODO: 2. 最終タイムの表示要素(finalTimeEl)のテキストに、現在のタイマー表示の値をセットする
+  // TODO: 3. クリア画面の要素(celebration)に、'is-active' クラスを追加する (classList.add を使う)
 }
 
 
 // ── もう一度ボタンを押したとき ──
-retryBtn.addEventListener('click', function() {
+retryBtn.addEventListener('click', function () {
 
   // タイマー関連をリセット
   clearInterval(timerInterval);
@@ -248,7 +201,7 @@ retryBtn.addEventListener('click', function() {
   startBtn.disabled = false;
 
   // 全条件をリセット（クリアクラスを外し、✗に戻す）
-  conditions.forEach(function(condition) {
+  conditions.forEach(function (condition) {
     const element = document.querySelector('#' + condition.id);
     element.classList.remove('clear');
     element.querySelector('.cond-icon').textContent = '✗';
@@ -256,7 +209,4 @@ retryBtn.addEventListener('click', function() {
 
   // 演出を隠す
   celebration.classList.remove('is-active');
-
-  // 紙吹雪を全部削除
-  confettiBox.innerHTML = '';
 });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,12 @@
   <meta name="description" content="ストップウォッチで測りながら、7つの条件を全部クリアするパスワードを作ろう！JavaScriptの実践ワークショップ">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <header class="header">
@@ -34,15 +38,8 @@
     <!-- パスワード入力欄 -->
     <div class="input-section">
       <label for="password-input" class="input-label">パスワードを入力：</label>
-      <input
-        type="text"
-        id="password-input"
-        class="password-input"
-        placeholder="← まずスタートを押してね！"
-        disabled
-        autocomplete="off"
-        spellcheck="false"
-      >
+      <input type="text" id="password-input" class="password-input" placeholder="← まずスタートを押してね！" disabled
+        autocomplete="off" spellcheck="false">
     </div>
 
     <!-- 条件リスト -->
@@ -112,19 +109,14 @@
   </main>
 
   <!-- ========================================
-    クリア演出：パチンコ風オーバーレイ
+    クリア演出：シンプルオーバーレイ
     最初は非表示（JSで .is-active を追加すると表示）
   ======================================== -->
   <div id="celebration" class="celebration">
 
-    <!-- 紙吹雪を入れるコンテナ（JSで動的に追加） -->
-    <div id="confetti-container" class="confetti-container"></div>
-
     <!-- メインコンテンツ -->
     <div class="celebration-content">
-      <div class="pachinko-slot">🎰</div>
-      <h2 class="clear-title">全条件クリア！！</h2>
-      <div class="clear-stars">⭐⭐⭐⭐⭐</div>
+      <h2 class="clear-title">成功</h2>
       <p class="clear-time-label">タイム</p>
       <p id="final-time" class="final-time">00:00.00</p>
       <button id="retry-btn" class="retry-btn">🔄 もう一度挑戦！</button>
@@ -134,4 +126,5 @@
 
   <script src="main.js"></script>
 </body>
+
 </html>
