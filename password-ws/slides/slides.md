@@ -154,7 +154,7 @@ style: |
 2. パスワード入力欄に入力する
 3. **1文字入力するたびに**条件を判定
 4. 条件クリアで <span class="red">✗</span> → <span class="green">✓</span> に変化
-5. **全条件クリア** → 🎰 パチンコ演出！
+5. **全条件クリア** → 成功画面表示！
 
 </div>
 <div>
@@ -164,7 +164,6 @@ style: |
 - 正規表現（`/[A-Z]/.test()`）
 - `setInterval` / `clearInterval`
 - `classList.add()` / `remove()`
-- `createElement()` でDOM操作
 
 </div>
 </div>
@@ -196,13 +195,31 @@ style: |
 const passwordInput = document.querySelector('#password-input'); // 入力欄
 const startBtn      = document.querySelector('#start-btn');      // スタートボタン
 const timerDisplay  = document.querySelector('#timer');          // タイマー表示
-const celebration   = document.querySelector('#celebration');    // クリア演出の枠
-const finalTimeEl   = document.querySelector('#final-time');     // 最終タイム表示
-const retryBtn      = document.querySelector('#retry-btn');      // もう一度ボタン
-const confettiBox   = document.querySelector('#confetti-container'); // 紙吹雪の入れ物
+
+// ここから下はまだ要素が取得できていません！
+const celebration   = null;
+const finalTimeEl   = null;
+const retryBtn      = null;
 ```
 
 * 前回と同じ書き方！**`#`をつけてIDで指定**する
+
+---
+
+# 💻 【ワーク】残りの要素を取得してみよう！
+
+`main.js` の 【ステップ1】にある以下の3つの変数に、正しい要素を代入してください。
+
+* `celebration`: クリア画面の枠（`#celebration`）
+* `finalTimeEl`: 最終タイム表示要素（`#final-time`）
+* `retryBtn`: もう一度ボタン（`#retry-btn`）
+
+```javascript
+// 解答例
+const celebration   = document.querySelector('#celebration');
+const finalTimeEl   = document.querySelector('#final-time');
+const retryBtn      = document.querySelector('#retry-btn');
+```
 
 ---
 
@@ -244,15 +261,30 @@ const conditions = [
   {
     id: 'cond-uppercase',
     // /[A-Z]/ = 「A〜Zのどれか」という正規表現パターン
-    // .test(val) = val にそのパターンがあるか（true/false）
     check: function(val) { return /[A-Z]/.test(val); }
   },
-  // ... 残りの条件も同じ形で続く
+  // ... ここから下は未完成！
 ];
 ```
 
 * **オブジェクト** = `{}` で囲んだデータの集まり（`id` と `check` をセットで持つ）
 * **配列** = `[]` で囲んだリスト（conditions[0] で最初の条件にアクセスできる）
+
+---
+
+# 💻 【ワーク】残りの条件を書いてみよう！
+
+`main.js` の 【ステップ2】にある以下の条件判定関数を埋めてみよう。
+スライドの正規表現や `.includes()` の説明がヒントです。
+
+### 1. 数字（0〜9）を含む (`cond-number`)
+* ヒント: 正規表現で「0〜9のいずれか」を表すパターンを使いましょう
+
+### 2. 記号を含む (`cond-symbol`)
+* ヒント: 記号のパターン `/[!@#$%^&*()\-_+=<>?]/` を使いましょう
+
+### 3. ¥（円記号）を含む (`cond-yen`)
+* ヒント: 正規表現ではなく `.includes()` を使いましょう
 
 ---
 
@@ -306,7 +338,7 @@ passwordInput.addEventListener('input', function() {
     }
   });
 
-  if (allClear) { celebrate(); } // 全クリアでパチンコ演出へ！
+  if (allClear) { celebrate(); } // 全クリアで演出（成功表示）へ！
 });
 ```
 
@@ -327,12 +359,28 @@ startBtn.addEventListener('click', function() {
   startBtn.disabled = true;
   passwordInput.disabled = false;
 
-  // 10ミリ秒ごとに表示を更新
-  timerInterval = setInterval(function() {
-    const elapsed = Date.now() - startTime; // 経過時間
-    timerDisplay.textContent = formatTime(elapsed);
-  }, 10);
+  // ここから下（タイマーの自動更新）が未完成！
+  // timerInterval = setInterval(..., 10);
 });
+```
+
+---
+
+# 💻 【ワーク】タイマーを動かそう！
+
+`main.js` の 【ステップ3】にあるスタートボタンのクリックイベント内で、10ミリ秒ごとに時間を更新する処理を完成させましょう。
+
+* ヒント:
+  * `setInterval(関数, ミリ秒)` を使用します
+  * 経過時間 `elapsed` を計算し、`timerDisplay.textContent` を `formatTime(elapsed)` で更新します
+  * あとで止めるために、返り値を変数 `timerInterval` に代入してください
+
+```javascript
+// 解答例
+timerInterval = setInterval(function() {
+  const elapsed = Date.now() - startTime;
+  timerDisplay.textContent = formatTime(elapsed);
+}, 10);
 ```
 
 ---
@@ -362,52 +410,39 @@ function formatTime(ms) {
 
 ---
 
-# 【ステップ4】クリア演出（パチンコ風🎰）
+# 【ステップ4】クリア演出（成功表示）
+
+クリア（全条件を達成）したときに呼び出される `celebrate()` 関数。
 
 ```javascript
 function celebrate() {
-  clearInterval(timerInterval); // タイマーを止める
-  isRunning = false;
-
-  finalTimeEl.textContent = timerDisplay.textContent; // タイムをセット
-
-  // 演出オーバーレイを表示
-  // CSS で .is-active クラスがついたとき display: flex になるよう設定済み
-  celebration.classList.add('is-active');
-
-  createConfetti(); // 紙吹雪を生成！
+  // ここが未完成！
+  // タイマーを止めて、結果を表示しよう
 }
 ```
 
-* **`clearInterval(timerInterval)`** で `setInterval` を止める  
-  ※止めるには `setInterval()` の返り値（ID）を保存しておく必要がある！
+* クリアしたタイミングでタイマーを止めて、表示を切り替える必要があります。
 
 ---
 
-# 【ステップ4】紙吹雪を動的に生成する
+# 💻 【ワーク】クリア時の処理を書こう！
 
-**`document.createElement()`** = JSでHTMLの要素を新しく作る関数
+`main.js` の 【ステップ4】にある `celebrate()` 関数の中身を完成させてください。
+
+1. タイマー `timerInterval` を止める（`clearInterval` を使う）
+2. `isRunning` を `false` にする
+3. `finalTimeEl` のテキストに、現在のタイマー表示（`timerDisplay.textContent`）の値をセットする
+4. `celebration` 要素に `is-active` クラスを追加して表示する
 
 ```javascript
-function createConfetti() {
-  const colors = ['#ff0000', '#ff9900', '#ffff00', '#00ff66', '#0066ff'];
-
-  for (let i = 0; i < 150; i++) {
-    const piece = document.createElement('div'); // <div>を新しく作成
-    piece.classList.add('confetti-piece');        // クラスを付ける
-
-    // ランダムなスタイルを設定
-    piece.style.left = Math.random() * 100 + '%'; // 横位置
-    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.animationDuration = (Math.random() * 2 + 1.8) + 's'; // 落下速度
-
-    confettiBox.appendChild(piece); // 画面に追加！
-  }
+// 解答例
+function celebrate() {
+  clearInterval(timerInterval);
+  isRunning = false;
+  finalTimeEl.textContent = timerDisplay.textContent;
+  celebration.classList.add('is-active');
 }
 ```
-
-* **`Math.random()`** = 0 以上 1 未満のランダムな小数を返す
-* **`.appendChild()`** = 親要素の末尾に子要素を追加する
 
 ---
 
@@ -457,8 +492,6 @@ check: function(val) {
 | `setInterval()` | `setInterval(fn, 10)` | 一定間隔で繰り返す |
 | `clearInterval()` | `clearInterval(id)` | 繰り返しを止める |
 | `classList` | `.add()` / `.remove()` | クラスの付け外し |
-| `createElement()` | `document.createElement('div')` | 要素を動的に作る |
-| `appendChild()` | `parent.appendChild(child)` | 要素を画面に追加 |
 
 ### 次のステップ（チャレンジ）
 * タイムのランキングを `localStorage` で保存してみよう！
@@ -469,7 +502,7 @@ check: function(val) {
 <!-- _class: title-slide -->
 <!-- _paginate: false -->
 
-# 🎰 挑戦してみよう！
+# 🎉 挑戦してみよう！
 
 ## 全条件クリアを目指せ！
 
