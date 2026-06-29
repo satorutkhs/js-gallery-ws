@@ -5,13 +5,13 @@
 // CSS と同じセレクタ記法（# = ID、. = クラス）を使う
 
 const passwordInput = document.querySelector('#password-input'); // パスワード入力欄
-const startBtn      = document.querySelector('#start-btn');      // スタートボタン
-const timerDisplay  = document.querySelector('#timer');          // タイマー表示エリア
+const startBtn = document.querySelector('#start-btn');      // スタートボタン
+const timerDisplay = document.querySelector('#timer');          // タイマー表示エリア
 
 // ──【ワーク】以下の3つのHTML要素も document.querySelector を使って取得してみよう！ ──
-const celebration   = null; // TODO: '#celebration' (クリア画面の枠) を取得する
-const finalTimeEl   = null; // TODO: '#final-time' (クリア画面に出す最終タイム) を取得する
-const retryBtn      = null; // TODO: '#retry-btn' (もう一度ボタン) を取得する
+const celebration = null; // TODO: '#celebration' (クリア画面の枠) を取得する
+const finalTimeEl = null; // TODO: '#final-time' (クリア画面に出す最終タイム) を取得する
+const retryBtn = null; // TODO: '#retry-btn' (もう一度ボタン) を取得する
 
 
 // ==========================================
@@ -30,7 +30,7 @@ const conditions = [
   {
     id: 'cond-length',
     // .length で文字数を取得し、8文字以上かチェック
-    check: function(val) {
+    check: function (val) {
       return val.length >= 8;
     }
   },
@@ -38,7 +38,7 @@ const conditions = [
     id: 'cond-uppercase',
     // /[A-Z]/ = 「A〜Zのどれか」にマッチする正規表現
     // .test(val) = val にマッチする文字があるか（true/false）
-    check: function(val) {
+    check: function (val) {
       return /[A-Z]/.test(val);
     }
   },
@@ -47,7 +47,7 @@ const conditions = [
   {
     id: 'cond-number',
     // 3. 数字（0〜9）を含む
-    check: function(val) {
+    check: function (val) {
       // TODO: ここに数字が含まれているか判定するコードを書く
       // return ...;
     }
@@ -55,7 +55,7 @@ const conditions = [
   {
     id: 'cond-symbol',
     // 4. 記号（! @ # $ % など）を含む
-    check: function(val) {
+    check: function (val) {
       // TODO: ここに記号が含まれているか判定するコードを書く
       // return ...;
     }
@@ -63,7 +63,7 @@ const conditions = [
   {
     id: 'cond-yen',
     // 5. ¥（円記号）を含む
-    check: function(val) {
+    check: function (val) {
       // TODO: ここに¥が含まれているか判定するコードを書く
       // return ...;
     }
@@ -75,14 +75,14 @@ const conditions = [
     // 全角の「Ａ」= 幅が広い大文字A（日本語フォントで使われる）→ キーボードの「A」を全角入力
     // 半角の「l」 = 普通の小文字エル（英語のL）
     // /Ａl/ という正規表現で「Ａ」のあとに「l」が連続する箇所を探す
-    check: function(val) {
+    check: function (val) {
       return /Ａl/.test(val);
     }
   },
   {
     id: 'cond-sushi',
     // 🍣 = 寿司の絵文字（そのまま includes で判定できる！）
-    check: function(val) {
+    check: function (val) {
       return val.includes('🍣');
     }
   }
@@ -91,7 +91,7 @@ const conditions = [
 
 // ── パスワードが入力・変更されるたびに実行される ──
 // 'input' イベント = テキストが変わるたびに発火する（キーを押すたびに動く）
-passwordInput.addEventListener('input', function() {
+passwordInput.addEventListener('input', function () {
 
   // スタートしていない場合は何もしない
   if (!isRunning) return;
@@ -100,11 +100,11 @@ passwordInput.addEventListener('input', function() {
   let allClear = true;               // 全条件クリアフラグ（最初はtrueで始める）
 
   // conditions 配列をひとつずつ処理（forEach = 繰り返し）
-  conditions.forEach(function(condition) {
+  conditions.forEach(function (condition) {
     // IDを使って条件の<li>要素を取得
     const element = document.querySelector('#' + condition.id);
     // アイコン（✗ や ✓）が入っている<span>を取得
-    const iconEl  = element.querySelector('.cond-icon');
+    const iconEl = element.querySelector('.cond-icon');
 
     if (condition.check(value)) {
       // ── 条件クリア！ ──
@@ -131,13 +131,13 @@ passwordInput.addEventListener('input', function() {
 // setInterval(関数, ミリ秒) = 指定したミリ秒ごとに関数を繰り返す
 // clearInterval(ID)         = setIntervalを止める（IDが必要）
 
-let startTime    = null;  // 計測開始時刻（Date.now()で取得するミリ秒）
+let startTime = null;  // 計測開始時刻（Date.now()で取得するミリ秒）
 let timerInterval = null; // setIntervalの返り値（止めるために保存しておく）
-let isRunning    = false; // 「今タイマーが動いているか？」のフラグ（旗）
+let isRunning = false; // 「今タイマーが動いているか？」のフラグ（旗）
 
 
 // ── スタートボタンを押したとき ──
-startBtn.addEventListener('click', function() {
+startBtn.addEventListener('click', function () {
   startTime = Date.now(); // 現在時刻を「開始時刻」として記録
   isRunning = true;
 
@@ -158,8 +158,8 @@ startBtn.addEventListener('click', function() {
 // ── 時間をMM:SS.cc形式の文字列に変換する関数 ──
 // 例: 75430 ミリ秒 → "01:15.43"
 function formatTime(ms) {
-  const minutes      = Math.floor(ms / 60000);            // 分 (60000ms = 1分)
-  const seconds      = Math.floor((ms % 60000) / 1000);   // 秒 (残りをさらに1000で割る)
+  const minutes = Math.floor(ms / 60000);            // 分 (60000ms = 1分)
+  const seconds = Math.floor((ms % 60000) / 1000);   // 秒 (残りをさらに1000で割る)
   const centiseconds = Math.floor((ms % 1000) / 10);      // 1/100秒
 
   // padStart(2, '0') = 1桁のとき先頭に'0'を付けて2桁にする（例: 5 → "05"）
@@ -185,7 +185,7 @@ function celebrate() {
 
 
 // ── もう一度ボタンを押したとき ──
-retryBtn.addEventListener('click', function() {
+retryBtn.addEventListener('click', function () {
 
   // タイマー関連をリセット
   clearInterval(timerInterval);
@@ -201,7 +201,7 @@ retryBtn.addEventListener('click', function() {
   startBtn.disabled = false;
 
   // 全条件をリセット（クリアクラスを外し、✗に戻す）
-  conditions.forEach(function(condition) {
+  conditions.forEach(function (condition) {
     const element = document.querySelector('#' + condition.id);
     element.classList.remove('clear');
     element.querySelector('.cond-icon').textContent = '✗';

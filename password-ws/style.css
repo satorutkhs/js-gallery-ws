@@ -93,7 +93,7 @@ body {
   letter-spacing: 4px;
   margin-bottom: 20px;
   min-width: 300px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
@@ -181,7 +181,7 @@ body {
   border: 1px solid #ddd;
   border-radius: 14px;
   padding: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .conditions-title {
@@ -263,7 +263,8 @@ body {
    クリア演出オーバーレイ
 =========================== */
 .celebration {
-  display: none; /* JSで .is-active を追加すると表示 */
+  display: none;
+  /* JSで .is-active を追加すると表示 */
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -296,6 +297,7 @@ body {
     transform: scale(0.9);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
