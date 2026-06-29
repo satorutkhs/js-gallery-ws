@@ -7,10 +7,11 @@
 const passwordInput = document.querySelector('#password-input'); // パスワード入力欄
 const startBtn      = document.querySelector('#start-btn');      // スタートボタン
 const timerDisplay  = document.querySelector('#timer');          // タイマー表示エリア
-const celebration   = document.querySelector('#celebration');    // クリア演出 of 枠
-const finalTimeEl   = document.querySelector('#final-time');     // クリア画面に出す最終タイム
-const retryBtn      = document.querySelector('#retry-btn');      // もう一度ボタン
-const confettiBox   = document.querySelector('#confetti-container'); // 紙吹雪の入れ物
+
+// ──【ワーク】以下の3つのHTML要素も document.querySelector を使って取得してみよう！ ──
+const celebration   = null; // TODO: '#celebration' (クリア画面の枠) を取得する
+const finalTimeEl   = null; // TODO: '#final-time' (クリア画面に出す最終タイム) を取得する
+const retryBtn      = null; // TODO: '#retry-btn' (もう一度ボタン) を取得する
 
 
 // ==========================================
@@ -41,28 +42,33 @@ const conditions = [
       return /[A-Z]/.test(val);
     }
   },
+  // ──【ワーク】ここから下の条件判定を自分で書いてみよう！ ──
+  // （ヒント：スライドの正規表現や includes の説明を参考にしよう）
   {
     id: 'cond-number',
-    // /[0-9]/ = 数字1文字にマッチ
+    // 3. 数字（0〜9）を含む
     check: function(val) {
-      return /[0-9]/.test(val);
+      // TODO: ここに数字が含まれているか判定するコードを書く
+      // return ...;
     }
   },
   {
     id: 'cond-symbol',
-    // /[!@#$%^&*()\-_+=<>?]/ = よく使う記号のどれかにマッチ
+    // 4. 記号（! @ # $ % など）を含む
     check: function(val) {
-      return /[!@#$%^&*()\-_+=<>?]/.test(val);
+      // TODO: ここに記号が含まれているか判定するコードを書く
+      // return ...;
     }
   },
   {
     id: 'cond-yen',
-    // ¥ = 円記号（U+00A5）
-    // includes() = 文字列の中に含まれているか確認する（true/false）
+    // 5. ¥（円記号）を含む
     check: function(val) {
-      return val.includes('¥');
+      // TODO: ここに¥が含まれているか判定するコードを書く
+      // return ...;
     }
   },
+  // ──【ワーク】ここまで ──
   {
     id: 'cond-zenkaku',
     // 【ポイント！】全角「Ａ」（U+FF21）と半角「l」（U+006C）は見た目が似ているが別の文字！
@@ -112,7 +118,7 @@ passwordInput.addEventListener('input', function() {
     }
   });
 
-  // 全条件クリアだったらパチンコ演出を開始！
+  // 全条件クリアだったらクリア演出を開始！
   if (allClear) {
     celebrate();
   }
@@ -140,11 +146,12 @@ startBtn.addEventListener('click', function() {
   passwordInput.focus();          // カーソルを入力欄に移動
   timerDisplay.classList.add('running'); // 光るクラスを追加
 
-  // 10ミリ秒ごとにタイマーの数字を更新する
-  timerInterval = setInterval(function() {
-    const elapsed = Date.now() - startTime; // 経過時間（ミリ秒）
-    timerDisplay.textContent = formatTime(elapsed); // 表示を更新
-  }, 10);
+  // ──【ワーク】10ミリ秒ごとにタイマーの数字を更新しよう！ ──
+  // TODO: setIntervalを使って、10ミリ秒経過するごとに elapsed を求め、タイマーの表示(timerDisplay.textContent)を formatTime(elapsed) で更新しよう
+  // timerInterval = setInterval(function() {
+  //   const elapsed = ...;
+  //   timerDisplay.textContent = ...;
+  // }, 10);
 });
 
 
@@ -165,58 +172,15 @@ function formatTime(ms) {
 
 
 // ==========================================
-// 【ステップ4】クリア演出（パチンコ風！🎰）
+// 【ステップ4】クリア演出（成功表示）
 // ==========================================
 
 function celebrate() {
-  // タイマーを止める
-  clearInterval(timerInterval);
-  isRunning = false;
-
-  // クリア時のタイムを演出画面にセット
-  finalTimeEl.textContent = timerDisplay.textContent;
-
-  // 演出オーバーレイを表示（CSS の .is-active クラスで表示が切り替わる）
-  celebration.classList.add('is-active');
-
-  // 紙吹雪を生成して画面に降らせる！
-  createConfetti();
-}
-
-
-// ── 紙吹雪（コンフェッティ）を生成する関数 ──
-function createConfetti() {
-  const colors = [
-    '#ff0000', '#ff9900', '#ffff00',
-    '#00ff66', '#0066ff', '#cc00ff', '#ff0099'
-  ];
-
-  // 150個の紙吹雪を作る
-  for (let i = 0; i < 150; i++) {
-
-    // <div> 要素を新しく作成する
-    const piece = document.createElement('div');
-    piece.classList.add('confetti-piece');
-
-    // ランダムな値を計算
-    const randomLeft     = Math.random() * 100;             // 0〜100% の横位置
-    const randomColor    = colors[Math.floor(Math.random() * colors.length)]; // ランダム色
-    const randomWidth    = Math.random() * 10 + 6;          // 幅: 6〜16px
-    const randomHeight   = Math.random() * 8  + 8;          // 高さ: 8〜16px
-    const randomDuration = Math.random() * 2  + 1.8;        // 落下時間: 1.8〜3.8秒
-    const randomDelay    = Math.random() * 2;               // 開始遅延: 0〜2秒
-
-    // 各スタイルを設定
-    piece.style.left            = randomLeft + '%';
-    piece.style.backgroundColor = randomColor;
-    piece.style.width           = randomWidth + 'px';
-    piece.style.height          = randomHeight + 'px';
-    piece.style.animationDuration = randomDuration + 's';
-    piece.style.animationDelay    = randomDelay + 's';
-
-    // 入れ物に追加（これでDOMに反映され、画面に表示される）
-    confettiBox.appendChild(piece);
-  }
+  // ──【ワーク】タイマーを止め、最終タイムをセットして、クリア画面を表示しよう！ ──
+  // TODO: 1. タイマー（timerInterval）を止める (clearInterval を使う)
+  // isRunning = false;
+  // TODO: 2. 最終タイムの表示要素(finalTimeEl)のテキストに、現在のタイマー表示の値をセットする
+  // TODO: 3. クリア画面の要素(celebration)に、'is-active' クラスを追加する (classList.add を使う)
 }
 
 
@@ -245,7 +209,4 @@ retryBtn.addEventListener('click', function() {
 
   // 演出を隠す
   celebration.classList.remove('is-active');
-
-  // 紙吹雪を全部削除
-  confettiBox.innerHTML = '';
 });
