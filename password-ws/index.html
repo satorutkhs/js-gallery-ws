@@ -112,19 +112,14 @@
   </main>
 
   <!-- ========================================
-    クリア演出：パチンコ風オーバーレイ
+    クリア演出：シンプルオーバーレイ
     最初は非表示（JSで .is-active を追加すると表示）
   ======================================== -->
   <div id="celebration" class="celebration">
 
-    <!-- 紙吹雪を入れるコンテナ（JSで動的に追加） -->
-    <div id="confetti-container" class="confetti-container"></div>
-
     <!-- メインコンテンツ -->
     <div class="celebration-content">
-      <div class="pachinko-slot">🎰</div>
-      <h2 class="clear-title">全条件クリア！！</h2>
-      <div class="clear-stars">⭐⭐⭐⭐⭐</div>
+      <h2 class="clear-title">成功</h2>
       <p class="clear-time-label">タイム</p>
       <p id="final-time" class="final-time">00:00.00</p>
       <button id="retry-btn" class="retry-btn">🔄 もう一度挑戦！</button>
