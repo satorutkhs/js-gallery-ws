@@ -223,6 +223,26 @@ const retryBtn      = document.querySelector('#retry-btn');
 
 ---
 
+# ⚠️ 今、コンソールに赤いエラーが出ていませんか？
+
+**それは正常です！** ステップ1を完成させるまで、ブラウザの開発者ツールに次のようなエラーが出ます。
+
+```
+Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')
+```
+
+### なぜ出るの？
+- `retryBtn` がまだ `null`（何も取得できていない）
+- `null.addEventListener(...)` は実行できないのでエラーになる
+
+### エラーメッセージの読み方
+`〇〇 of null` → 「`null`に対して〇〇しようとした」という意味。  
+**「変数が想定と違う中身（null）になっている」ことを教えてくれるヒント**として読む練習をしよう。
+
+* ステップ1を正しく完成させると、このエラーは自然に消えます
+
+---
+
 # 【ステップ2】`input` イベントとは？
 
 前回学んだのは **`click`** イベント（クリックで発火）。  
@@ -344,6 +364,48 @@ passwordInput.addEventListener('input', function() {
 
 ---
 
+# 【ステップ2】`classList` と CSS はセットで動く
+
+`element.classList.add('clear')` は「クラスを付けるだけ」。  
+**見た目（色が赤→緑に変わる）は CSS 側があらかじめ用意している。**
+
+<div class="cols-2">
+<div>
+
+### CSSでの見た目の定義 (`style.css`)
+
+```css
+/* 通常時（未クリア）は赤系 */
+.cond-icon {
+  color: #e84040;
+}
+
+/* .clear が付くと緑系に変化 */
+.condition-item.clear .cond-icon {
+  color: #00cc66;
+}
+```
+
+</div>
+<div>
+
+### JSでの操作
+```javascript
+// クラスを付ける → 緑になる
+element.classList.add('clear');
+
+// クラスを外す → 赤に戻る
+element.classList.remove('clear');
+```
+
+**JSは「状態（クラス）」を切り替えるだけ**  
+**色や見た目は全てCSSが担当**、という役割分担を意識しよう
+
+</div>
+</div>
+
+---
+
 # 【ステップ3】ストップウォッチの実装
 
 **`setInterval()`** = 一定時間ごとに処理を繰り返す関数
@@ -443,6 +505,39 @@ function celebrate() {
   celebration.classList.add('is-active');
 }
 ```
+
+---
+
+# 【ステップ5】もう一度ボタン（リセット処理）
+
+ここは**すでに書かれているコード**。ワークはないが、自分で読んで理解しよう！  
+`celebrate()` で変化させたものを、ひとつずつ**スタート前の状態に戻す**のがポイント。
+
+```javascript
+retryBtn.addEventListener('click', function() {
+  clearInterval(timerInterval); // タイマーを止める
+  timerInterval = null;
+  startTime = null;
+  isRunning = false;
+
+  timerDisplay.textContent = '00:00.00'; // 表示を0に戻す
+  timerDisplay.classList.remove('running');
+  passwordInput.value = '';              // 入力欄を空に
+  passwordInput.disabled = true;         // スタート前の状態へ
+  startBtn.disabled = false;
+
+  conditions.forEach(function(condition) { // 条件アイコンを全部✗に戻す
+    const element = document.querySelector('#' + condition.id);
+    element.classList.remove('clear');
+    element.querySelector('.cond-icon').textContent = '✗';
+  });
+
+  celebration.classList.remove('is-active'); // 演出画面を閉じる
+});
+```
+
+* `celebrate()` で ON にしたもの（`isRunning`, `.clear`, `.is-active` など）を、**逆の操作で1つずつOFFに戻している**だけ
+* 「何かを変化させる処理を書いたら、戻す処理とセットで考える」というのは実務でもよくある考え方
 
 ---
 

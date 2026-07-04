@@ -13,6 +13,14 @@ const celebration = null; // TODO: '#celebration' (クリア画面の枠) を取
 const finalTimeEl = null; // TODO: '#final-time' (クリア画面に出す最終タイム) を取得する
 const retryBtn = null; // TODO: '#retry-btn' (もう一度ボタン) を取得する
 
+// 【今だけ表示される注意】
+// このワークが終わるまで、ブラウザのコンソールに
+// 「Cannot read properties of null (reading 'addEventListener')」というエラーが出ます。
+// これは retryBtn がまだ null（何も取得できていない）状態で、
+// ファイル下部の retryBtn.addEventListener(...) が実行されてしまうためです。
+// 上の3つを正しく取得できると、このエラーは自然に消えます。
+// → 「nullのプロパティは読めない」というエラーメッセージの読み方を覚える良い機会です！
+
 
 // ==========================================
 // 【ステップ2】パスワード条件の定義と判定
@@ -183,6 +191,13 @@ function celebrate() {
   // TODO: 3. クリア画面の要素(celebration)に、'is-active' クラスを追加する (classList.add を使う)
 }
 
+
+// ==========================================
+// 【ステップ5】もう一度ボタン（リセット処理）
+// ==========================================
+// ここは既に完成しています。読んで理解しよう！
+// クリアしたときに変化させたもの（タイマー・入力欄・条件リストのアイコン・演出画面）を
+// スタート前の状態に、ひとつずつ戻していく処理。
 
 // ── もう一度ボタンを押したとき ──
 retryBtn.addEventListener('click', function () {
